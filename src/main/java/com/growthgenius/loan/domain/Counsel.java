@@ -1,13 +1,22 @@
 package com.growthgenius.loan.domain;
 
+import com.growthgenius.loan.dto.CounselDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static org.springframework.beans.BeanUtils.copyProperties;
+
 @Getter
 @Entity
+@Builder
 @Table(name = "counsel")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Counsel extends BaseEntity {
 
     @Id
@@ -62,5 +71,23 @@ public class Counsel extends BaseEntity {
      */
     @Column(length = 5, columnDefinition = "varchar(5) COMMENT '우편번호'")
     private String zipCode;
+
+    public static Counsel from(CounselDto.Request request) {
+        Counsel counsel = new Counsel();
+        counsel.name = request.getName();
+        counsel.zipCode = request.getZipCode();
+        counsel.address = request.getAddress();
+        counsel.addressDetail = request.getAddressDetail();
+        counsel.appliedAt = LocalDateTime.now();
+        counsel.cellPhone = request.getCellPhone();
+        counsel.email = request.getEmail();
+        return counsel;
+    }
+
+    public CounselDto.Response mapToResponse() {
+        CounselDto.Response response = new CounselDto.Response();
+        copyProperties(this, response);
+        return response;
+    }
 
 }

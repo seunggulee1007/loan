@@ -3,10 +3,10 @@ spring:
     name: loan
   datasource:
     hikari:
-      data-source-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:mem:testdb
+      jdbc-url: jdbc:h2:tcp://localhost/~/testdb
       username: sa
       password:
+      driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: update
