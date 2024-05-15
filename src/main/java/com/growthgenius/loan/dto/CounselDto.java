@@ -1,15 +1,14 @@
 package com.growthgenius.loan.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CounselDto {
 
     @Getter
+    @Builder
     @AllArgsConstructor
     public static class Request {
 
@@ -25,6 +24,7 @@ public class CounselDto {
 
     @Builder
     @Getter
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
