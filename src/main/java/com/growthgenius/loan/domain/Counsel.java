@@ -87,6 +87,7 @@ public class Counsel extends BaseEntity {
     public CounselDto.Response mapToResponse() {
         CounselDto.Response response = new CounselDto.Response();
         copyProperties(this, response);
+        response.setCounselId(this.id);
         return response;
     }
 
