@@ -2,6 +2,8 @@ package com.growthgenius.loan.service;
 
 import com.growthgenius.loan.domain.Counsel;
 import com.growthgenius.loan.dto.CounselDto;
+import com.growthgenius.loan.exception.BaseException;
+import com.growthgenius.loan.exception.ResultType;
 import com.growthgenius.loan.repository.CounselRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -53,6 +58,33 @@ class CounselServiceTest {
 
         // then
         assertThat(response.getName()).isSameAs(counsel.getName());
+
+    }
+
+    @Test
+    @DisplayName("상담 식별자로 조회 성공")
+    void findByCounselId_success() {
+        // given
+        Long counselId = 1L;
+        Counsel counsel = Counsel.builder().id(counselId).build();
+        // when
+        when(counselRepository.findById(counselId)).thenReturn(Optional.of(counsel));
+
+        CounselDto.Response response = counselService.get(counselId);
+        // then
+        assertThat(response.getCounselId()).isEqualTo(counselId);
+
+    }
+
+    @Test
+    @DisplayName("상담 식별자로 조회 실패 - 존재하지 않음")
+    void findByCounselId_fail_not_exist() {
+        // given
+        Long counselId = 1L;
+        // when
+        when(counselRepository.findById(counselId)).thenThrow(new BaseException(ResultType.SYSTEM_ERROR));
+        // then
+        assertThrows(BaseException.class, () -> counselService.get(counselId));
 
     }
 
