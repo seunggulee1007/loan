@@ -91,4 +91,14 @@ public class Counsel extends BaseEntity {
         return response;
     }
 
+    public void update(CounselDto.Request request) {
+        this.name = request.getName();
+        this.zipCode = request.getZipCode();
+        this.address = request.getAddress();
+        this.addressDetail = request.getAddressDetail();
+        this.appliedAt = LocalDateTime.now();
+        this.cellPhone = request.getCellPhone();
+        this.email = request.getEmail();
+    }
+
 }
