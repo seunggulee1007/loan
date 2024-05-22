@@ -9,6 +9,7 @@ import com.growthgenius.loan.repository.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +36,14 @@ public class CounselServiceImpl implements CounselService {
         Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
         counsel.update(request);
         return counsel.mapToResponse();
+    }
+
+    @Override
+    public void delete(Long counselId) {
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+        if (StringUtils.hasText(counsel.getMemo())) {
+            throw new BaseException(ResultType.SYSTEM_ERROR, "상담 메모가 있는 경우 삭제하실 수 없습니다.");
+        }
     }
 
 }
