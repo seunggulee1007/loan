@@ -16,7 +16,7 @@ public class ResponseDto<T> implements Serializable {
 
     private ResultObject result;
 
-    private T data;
+    private transient T data;
 
     public ResponseDto(ResultObject result) {
         this.result = result;

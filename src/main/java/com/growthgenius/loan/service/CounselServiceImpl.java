@@ -26,7 +26,8 @@ public class CounselServiceImpl implements CounselService {
 
     @Override
     public Response get(Long counselId) {
-        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+        Counsel counsel =
+            counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR, "존재하지 않는 상담입니다."));
         return counsel.mapToResponse();
     }
 
