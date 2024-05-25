@@ -70,15 +70,42 @@ class CounselControllerTest {
         CounselDto.Response saved = saveAndGetResponse();
         String name = "승구";
         CounselDto.Request updateRequest = getRequest(name);
-        // when
-        mockMvc.perform(patch("/counsels/" + saved.getCounselId()).content(objectMapper.writeValueAsString(updateRequest)).contentType(
+        // when & then
+        this.mockMvc.perform(patch("/counsels/" + saved.getCounselId()).content(objectMapper.writeValueAsString(updateRequest)).contentType(
                 MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("result.desc").value("success"))
             .andExpect(jsonPath("data.name").value(name));
 
-        // then
+    }
+
+    @Test
+    @DisplayName("상담 삭제 테스트 - 성공")
+    void deleteById() throws Exception {
+        // given
+        CounselDto.Response saved = saveAndGetResponse();
+        // when & then
+        this.mockMvc.perform(delete("/counsels/" + saved.getCounselId()))
+            .andDo(print())
+            .andExpect(status().isOk());
+
+        this.mockMvc.perform(get("/counsels/" + saved.getCounselId()))
+            .andDo(print())
+            .andExpect(status().is4xxClientError())
+        ;
+
+    }
+
+    @Test
+    @DisplayName("상담 삭제 실패 - 존재하지 않는 상담")
+    void deleteById_fail_not_present_counsel() throws Exception {
+        // given
+        long id = 9999L;
+        // when && then
+        this.mockMvc.perform(delete("/counsels/" + id))
+            .andDo(print())
+            .andExpect(status().is4xxClientError());
 
     }
 

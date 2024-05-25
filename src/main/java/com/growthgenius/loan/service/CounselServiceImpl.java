@@ -45,6 +45,7 @@ public class CounselServiceImpl implements CounselService {
         if (StringUtils.hasText(counsel.getMemo())) {
             throw new BaseException(ResultType.SYSTEM_ERROR, "상담 메모가 있는 경우 삭제하실 수 없습니다.");
         }
+        counselRepository.deleteById(counselId);
     }
 
 }
