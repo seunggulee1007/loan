@@ -101,4 +101,8 @@ public class Counsel extends BaseEntity {
         this.email = request.getEmail();
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
 }

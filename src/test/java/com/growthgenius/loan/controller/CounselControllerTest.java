@@ -90,10 +90,9 @@ class CounselControllerTest {
             .andDo(print())
             .andExpect(status().isOk());
 
-        this.mockMvc.perform(get("/counsels/" + saved.getCounselId()))
+        this.mockMvc.perform(delete("/counsels/" + saved.getCounselId()))
             .andDo(print())
-            .andExpect(status().is4xxClientError())
-        ;
+            .andExpect(status().is4xxClientError());
 
     }
 
