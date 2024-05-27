@@ -47,7 +47,7 @@
 | No | 논리명            | 물리명     | 타입            | 비고 |
 |----|----------------|---------|---------------|----|
 | 1  | application_id | 신청 식별자  | bigint        | pk |
-| 2  | created_at     | 신청일자    | datetime      |
+| 2  | created_at     | 신청일자    | datetime      |    |
 | 3  | is_deleted     | 이용가능여부  | bit           |
 | 4  | updated_at     | 수정일자    | datetime      |
 | 5  | applied_at     | 신청일자    | datetime      |
