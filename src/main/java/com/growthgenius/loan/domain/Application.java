@@ -10,6 +10,10 @@ import org.hibernate.annotations.Where;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import static com.growthgenius.loan.dto.ApplicationDto.Request;
+import static com.growthgenius.loan.dto.ApplicationDto.Response;
+import static org.springframework.beans.BeanUtils.copyProperties;
+
 @Getter
 @Entity
 @Builder
@@ -47,5 +51,22 @@ public class Application extends BaseEntity {
 
     @Column(columnDefinition = "datetime default null comment '신청일자'")
     private LocalDateTime appliedAt;
+
+    public static Application from(Request request) {
+        Application application = new Application();
+        application.name = request.getName();
+        application.email = request.getEmail();
+        application.cellPhone = request.getCellPhone();
+        application.hopeAmount = request.getHopeAmount();
+        application.appliedAt = LocalDateTime.now();
+        return application;
+    }
+
+    public Response mapToResponse() {
+        Response response = new Response();
+        copyProperties(this, response);
+        response.setApplicationId(this.id);
+        return response;
+    }
 
 }
