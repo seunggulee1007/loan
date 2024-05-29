@@ -14,8 +14,7 @@ import java.math.BigDecimal;
 
 import static com.growthgenius.loan.dto.ApplicationDto.Request;
 import static com.growthgenius.loan.dto.ApplicationDto.Response;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,6 +72,32 @@ class ApplicationControllerTest {
             .andExpect(jsonPath("data.applicationId").value(response.getApplicationId()))
         ;
         // then
+
+    }
+
+    @Test
+    @DisplayName("신청서 수정")
+    void updateByApplicationId() throws Exception {
+        // given
+        String name = "seunggu";
+        Request request = Request.builder()
+            .name(name)
+            .cellPhone("010-1234-1234")
+            .email("email@email.com")
+            .hopeAmount(BigDecimal.valueOf(500000000))
+            .build();
+        Response response = applicationService.create(request);
+        Long applicationId = response.getApplicationId();
+        BigDecimal hopeAmount = BigDecimal.valueOf(55500202020L);
+        request.setHopeAmount(hopeAmount);
+
+        // when && then
+        this.mockMvc.perform(
+                patch("/applications/" + applicationId).contentType(MediaType.APPLICATION_JSON).content(this.objectMapper.writeValueAsString(
+                    request))
+            ).andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("data.hopeAmount").value(hopeAmount));
 
     }
 
