@@ -17,15 +17,15 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 @Getter
 @Entity
 @Builder
-@Table(name = "counsel")
+@Table(name = "application")
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Application extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(columnDefinition = "varchar(12) default null comment '신청자'")
