@@ -1,11 +1,14 @@
 package com.growthgenius.loan.service;
 
-import com.growthgenius.loan.dto.ApplicationDto;
+import com.growthgenius.loan.dto.ApplicationDto.Request;
+import com.growthgenius.loan.dto.ApplicationDto.Response;
 
 public interface ApplicationService {
 
-    ApplicationDto.Response create(ApplicationDto.Request request);
+    Response create(Request request);
 
-    ApplicationDto.Response get(Long applicationId);
+    Response get(Long applicationId);
+
+    Response update(Long applicationId, Request request);
 
 }
