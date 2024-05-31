@@ -35,4 +35,8 @@ public class BaseEntity {
     @Column(name = "is_deleted")
     protected boolean deleted;
 
+    public void delete() {
+        this.deleted = true;
+    }
+
 }

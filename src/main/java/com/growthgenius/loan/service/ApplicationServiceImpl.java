@@ -38,4 +38,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         return application.mapToResponse();
     }
 
+    @Override
+    @Transactional
+    public void delete(Long applicationId) {
+        Application application =
+            applicationRepository.findById(applicationId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+        application.delete();
+    }
+
 }
