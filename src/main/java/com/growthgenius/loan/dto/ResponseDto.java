@@ -30,6 +30,10 @@ public class ResponseDto<T> implements Serializable {
         return new ResponseDto<>(ResultObject.getSuccess());
     }
 
+    public static <T> ResponseDto<T> ok(T data) {
+        return new ResponseDto<>(ResultObject.getSuccess(), data);
+    }
+
     public static <T> ResponseDto<T> response(T data) {
         return new ResponseDto<>(ResultObject.getSuccess(), data);
     }
