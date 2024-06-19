@@ -40,12 +40,17 @@ public class CounselServiceImpl implements CounselService {
     }
 
     @Override
-    public void delete(Long counselId) {
+    @Transactional
+    public boolean delete(Long counselId) {
         Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
         if (StringUtils.hasText(counsel.getMemo())) {
             throw new BaseException(ResultType.SYSTEM_ERROR, "상담 메모가 있는 경우 삭제하실 수 없습니다.");
         }
-        counselRepository.deleteById(counselId);
+        if (counsel.isDeleted()) {
+            throw new BaseException(ResultType.SYSTEM_ERROR, "이미 삭제된 상담입니다.");
+        }
+        counsel.delete();
+        return true;
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +18,7 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 @Table(name = "counsel")
 @NoArgsConstructor
 @AllArgsConstructor
+@Where(clause = "is_deleted = false")
 public class Counsel extends BaseEntity {
 
     @Id
@@ -99,6 +101,10 @@ public class Counsel extends BaseEntity {
         this.appliedAt = LocalDateTime.now();
         this.cellPhone = request.getCellPhone();
         this.email = request.getEmail();
+    }
+
+    public void delete() {
+        this.deleted = true;
     }
 
 }
