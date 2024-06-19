@@ -8,6 +8,7 @@ import com.growthgenius.loan.exception.ResultType;
 import com.growthgenius.loan.repository.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,14 @@ public class CounselServiceImpl implements CounselService {
     @Override
     public Response get(Long counselId) {
         Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+        return counsel.mapToResponse();
+    }
+
+    @Override
+    @Transactional
+    public Response update(Long counselId, Request request) {
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+        counsel.update(request);
         return counsel.mapToResponse();
     }
 

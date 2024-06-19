@@ -25,4 +25,9 @@ public class CounselController {
         return ok(counselService.get(counselId));
     }
 
+    @PatchMapping("{counselId}")
+    public ResponseDto<CounselDto.Response> update(@PathVariable Long counselId, @RequestBody CounselDto.Request request) {
+        return ok(counselService.update(counselId, request));
+    }
+
 }
