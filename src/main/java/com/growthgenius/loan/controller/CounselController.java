@@ -30,4 +30,10 @@ public class CounselController {
         return ok(counselService.update(counselId, request));
     }
 
+    @DeleteMapping("{counselId}")
+    public ResponseDto<Void> delete(@PathVariable Long counselId) {
+        counselService.delete(counselId);
+        return ok();
+    }
+
 }
