@@ -69,4 +69,11 @@ public class Application extends BaseEntity {
         return response;
     }
 
+    public void update(Request request) {
+        this.name = request.getName();
+        this.email = request.getEmail();
+        this.cellPhone = request.getCellPhone();
+        this.hopeAmount = request.getHopeAmount();
+    }
+
 }
