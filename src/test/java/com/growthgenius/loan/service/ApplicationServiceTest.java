@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +27,7 @@ class ApplicationServiceTest {
     private ApplicationRepository applicationRepository;
 
     @Test
-    @DisplayName("")
+    @DisplayName("대출 신청")
     void createApplication() {
         // given
         Application application = Application.builder().name("seunggu")
@@ -47,6 +48,20 @@ class ApplicationServiceTest {
         assertThat(response.getHopeAmount()).isEqualTo(application.getHopeAmount());
         assertThat(response.getName()).isEqualTo(application.getName());
 
+    }
+
+    @Test
+    @DisplayName("존재하는 대출 신청 조회")
+    void findByApplicationId() {
+        // given
+        Long findId = 1L;
+
+        Application application = Application.builder().id(findId).build();
+        when(applicationRepository.findById(findId)).thenReturn(Optional.ofNullable(application));
+        // when
+        ApplicationDto.Response response = applicationService.get(findId);
+        // then
+        assertThat(response.getApplicationId()).isEqualTo(findId);
     }
 
 }
