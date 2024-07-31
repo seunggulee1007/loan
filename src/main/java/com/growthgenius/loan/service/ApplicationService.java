@@ -11,4 +11,6 @@ public interface ApplicationService {
 
     Response update(Long applicationId, Request request);
 
+    void delete(Long applicationId);
+
 }
